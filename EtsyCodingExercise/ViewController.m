@@ -15,6 +15,7 @@
     NSString *searchTerm;
     NSMutableArray *searchResults;
     int searchOffset;
+    BOOL searchInProgress;
 }
 
 @property (nonatomic, strong) IBOutlet UITextField *searchTextfield;
@@ -28,6 +29,7 @@
     [super viewDidLoad];
     searchResults = [NSMutableArray new];
     searchOffset = 0;
+    searchInProgress = NO;
     // Do any additional setup after loading the view, typically from a nib.
 }
 
@@ -55,12 +57,15 @@
 }
 
 - (void)performSearch {
+    NSLog(@"searching...");
+    searchInProgress = YES;
     if ([searchTerm length]) {
         APIController *api = [APIController new];
-        [api makeSearchWithKeyword:searchTerm offset:searchOffset limit:10 andCompletionHandler:^(NSArray *listings, NSError *error) {
+        [api makeSearchWithKeyword:searchTerm offset:searchOffset limit:3 andCompletionHandler:^(NSArray *listings, NSError *error) {
             [searchResults addObjectsFromArray:listings];
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.tableView reloadData];
+                searchInProgress = NO;
             });
         }];
     }
@@ -75,6 +80,23 @@
     [self performSearch];
     
     return YES;
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    NSLog(@"yeah, stopped");
+    CGFloat actualPosition = scrollView.contentOffset.y;
+    CGFloat contentHeight = scrollView.contentSize.height - self.tableView.frame.size.height;
+    //NSLog(@"scroll, %f %f",actualPosition, contentHeight);
+    if (actualPosition >= contentHeight && !searchInProgress) {
+        searchOffset += 3;
+        [self performSearch];
+    }
 }
 
 

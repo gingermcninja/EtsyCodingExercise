@@ -28,7 +28,7 @@
             EtsyListing *etsyListing = [[EtsyListing alloc] initWithTitle:title andImageURL:[NSURL URLWithString:fullImgURL]];
             [listings addObject:etsyListing];
         }
-        completion(resultList, error);
+        completion(listings, error);
     }];
     [urlSessionDataTask resume];
 }
