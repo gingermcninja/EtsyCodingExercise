@@ -22,16 +22,6 @@
     // Configure the view for the selected state
 }
 
-- (void)setImageURL:(NSURL *)imageURL {
-    NSURLSessionDataTask *imageLoadTask = [[NSURLSession sharedSession] dataTaskWithURL:imageURL completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        if (!error && data) {
-            UIImage *image = [[UIImage alloc] initWithData:data];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                self.etsyImageView.image = image;
-            });
-        }
-    }];
-    [imageLoadTask resume];
-}
+
 
 @end

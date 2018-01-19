@@ -17,7 +17,8 @@
 		684677FA200EE75E00B532FD /* EtsyCodingExerciseUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 684677F9200EE75E00B532FD /* EtsyCodingExerciseUITests.m */; };
 		68467809200EEBE800B532FD /* EtsyListing.m in Sources */ = {isa = PBXBuildFile; fileRef = 68467808200EEBE800B532FD /* EtsyListing.m */; };
 		6846780C200EEC0B00B532FD /* EtsyResultTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6846780B200EEC0B00B532FD /* EtsyResultTableViewCell.m */; };
-		6846780F200EF68D00B532FD /* APIController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6846780E200EF68D00B532FD /* APIController.m */; };
+		6846780F200EF68D00B532FD /* HTTPRequestController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6846780E200EF68D00B532FD /* HTTPRequestController.m */; };
+		686A688A20113C8D004D6248 /* EtsyListingRepository.m in Sources */ = {isa = PBXBuildFile; fileRef = 686A688920113C8D004D6248 /* EtsyListingRepository.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,8 +59,10 @@
 		68467808200EEBE800B532FD /* EtsyListing.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EtsyListing.m; sourceTree = "<group>"; };
 		6846780A200EEC0B00B532FD /* EtsyResultTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EtsyResultTableViewCell.h; sourceTree = "<group>"; };
 		6846780B200EEC0B00B532FD /* EtsyResultTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EtsyResultTableViewCell.m; sourceTree = "<group>"; };
-		6846780D200EF68D00B532FD /* APIController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APIController.h; sourceTree = "<group>"; };
-		6846780E200EF68D00B532FD /* APIController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APIController.m; sourceTree = "<group>"; };
+		6846780D200EF68D00B532FD /* HTTPRequestController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HTTPRequestController.h; sourceTree = "<group>"; };
+		6846780E200EF68D00B532FD /* HTTPRequestController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HTTPRequestController.m; sourceTree = "<group>"; };
+		686A688820113C8D004D6248 /* EtsyListingRepository.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EtsyListingRepository.h; sourceTree = "<group>"; };
+		686A688920113C8D004D6248 /* EtsyListingRepository.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EtsyListingRepository.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,14 +118,16 @@
 				684677D8200EE75D00B532FD /* ViewController.h */,
 				684677D9200EE75D00B532FD /* ViewController.m */,
 				684677DB200EE75D00B532FD /* Main.storyboard */,
+				686A688820113C8D004D6248 /* EtsyListingRepository.h */,
+				686A688920113C8D004D6248 /* EtsyListingRepository.m */,
 				684677DE200EE75D00B532FD /* Assets.xcassets */,
 				684677E0200EE75D00B532FD /* LaunchScreen.storyboard */,
 				684677E3200EE75D00B532FD /* Info.plist */,
 				684677E4200EE75D00B532FD /* main.m */,
 				68467807200EEBE800B532FD /* EtsyListing.h */,
 				68467808200EEBE800B532FD /* EtsyListing.m */,
-				6846780D200EF68D00B532FD /* APIController.h */,
-				6846780E200EF68D00B532FD /* APIController.m */,
+				6846780D200EF68D00B532FD /* HTTPRequestController.h */,
+				6846780E200EF68D00B532FD /* HTTPRequestController.m */,
 				6846780A200EEC0B00B532FD /* EtsyResultTableViewCell.h */,
 				6846780B200EEC0B00B532FD /* EtsyResultTableViewCell.m */,
 			);
@@ -280,8 +285,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6846780F200EF68D00B532FD /* APIController.m in Sources */,
+				6846780F200EF68D00B532FD /* HTTPRequestController.m in Sources */,
 				684677DA200EE75D00B532FD /* ViewController.m in Sources */,
+				686A688A20113C8D004D6248 /* EtsyListingRepository.m in Sources */,
 				684677E5200EE75D00B532FD /* main.m in Sources */,
 				684677D7200EE75D00B532FD /* AppDelegate.m in Sources */,
 				68467809200EEBE800B532FD /* EtsyListing.m in Sources */,

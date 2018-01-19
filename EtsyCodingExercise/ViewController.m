@@ -7,15 +7,13 @@
 //
 
 #import "ViewController.h"
-#import "APIController.h"
 #import "EtsyResultTableViewCell.h"
 #import "EtsyListing.h"
+#import "EtsyListingRepository.h"
 
 @interface ViewController () {
+    EtsyListingRepository *repository;
     NSString *searchTerm;
-    NSMutableArray *searchResults;
-    int searchOffset;
-    BOOL searchInProgress;
 }
 
 @property (nonatomic, strong) IBOutlet UITextField *searchTextfield;
@@ -27,10 +25,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    searchResults = [NSMutableArray new];
-    searchOffset = 0;
-    searchInProgress = NO;
-    // Do any additional setup after loading the view, typically from a nib.
+    repository = [EtsyListingRepository new];
+    self.tableView.backgroundColor = [UIColor clearColor];
 }
 
 
@@ -41,60 +37,74 @@
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [searchResults count];
+    return [repository.listings count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     EtsyResultTableViewCell *cell = (EtsyResultTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
-    EtsyListing *listing = (EtsyListing *)[searchResults objectAtIndex:indexPath.row];
+    EtsyListing *listing = (EtsyListing *)[repository.listings objectAtIndex:indexPath.row];
     cell.titleLabel.text = listing.title;
     cell.imageURL = listing.imageURL;
+    cell.etsyImageView.image = [UIImage imageNamed:@"Etsy-logo"];
+    NSURLSessionDataTask *imageLoadTask = [[NSURLSession sharedSession] dataTaskWithURL:listing.imageURL completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        if (!error && data) {
+            UIImage *image = [[UIImage alloc] initWithData:data];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                EtsyResultTableViewCell *etsyCell = (EtsyResultTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+                if(etsyCell && etsyCell.imageURL == listing.imageURL) {
+                    etsyCell.etsyImageView.image = image;
+                }
+            });
+        }
+    }];
+    [imageLoadTask resume];
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return UITableViewAutomaticDimension;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 394;
 }
 
 - (void)performSearch {
-    NSLog(@"searching...");
-    searchInProgress = YES;
     if ([searchTerm length]) {
-        APIController *api = [APIController new];
-        [api makeSearchWithKeyword:searchTerm offset:searchOffset limit:3 andCompletionHandler:^(NSArray *listings, NSError *error) {
-            [searchResults addObjectsFromArray:listings];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self.tableView reloadData];
-                searchInProgress = NO;
-            });
+        [repository performSearchWithKeyWord:searchTerm andCompletionHandler:^(NSError *searchError) {
+            if(searchError) {
+                NSLog(@"Error: %@",searchError.localizedDescription);
+                
+                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:searchError.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Okay" style:UIAlertActionStyleDefault handler:nil];
+                [alert addAction:okAction];
+                [self presentViewController:alert animated:NO completion:nil];
+                
+            } else {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self.tableView reloadData];
+                });
+            }
         }];
     }
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    [textField resignFirstResponder];
     
-    searchTerm = textField.text;
-    searchOffset = 0;
-    [searchResults removeAllObjects];
-    [self performSearch];
+    [textField resignFirstResponder];
+    if(![textField.text isEqualToString:searchTerm]) {
+        [self.tableView setContentOffset:CGPointZero animated:NO];
+        searchTerm = textField.text;
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self performSearch];
+        });
+    }
     
     return YES;
 }
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    
-}
-
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
-{
-    NSLog(@"yeah, stopped");
-    CGFloat actualPosition = scrollView.contentOffset.y;
-    CGFloat contentHeight = scrollView.contentSize.height - self.tableView.frame.size.height;
-    //NSLog(@"scroll, %f %f",actualPosition, contentHeight);
-    if (actualPosition >= contentHeight && !searchInProgress) {
-        searchOffset += 3;
+- (void)tableView:(UITableView *)tableView willDisplayCell:(nonnull UITableViewCell *)cell forRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
+    if ([repository.listings count] - indexPath.row == 2 && ([repository.listings count] < repository.maxListingsCount) ) {
         [self performSearch];
     }
 }
