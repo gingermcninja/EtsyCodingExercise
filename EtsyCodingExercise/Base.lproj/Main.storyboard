@@ -66,7 +66,7 @@
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ScF-wp-mda">
                                                     <rect key="frame" x="15" y="35" width="345" height="345"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" secondItem="ScF-wp-mda" secondAttribute="height" multiplier="1:1" id="nGa-1n-4Up"/>
+                                                        <constraint firstAttribute="width" secondItem="ScF-wp-mda" secondAttribute="height" multiplier="1:1" priority="900" id="nGa-1n-4Up"/>
                                                     </constraints>
                                                 </imageView>
                                             </subviews>
