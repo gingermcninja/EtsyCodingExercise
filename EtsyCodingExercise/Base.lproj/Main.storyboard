@@ -80,7 +80,7 @@
                                                 <constraint firstItem="ScF-wp-mda" firstAttribute="leading" secondItem="L0y-eT-NKi" secondAttribute="leading" constant="15" id="x3n-xh-0zE"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" red="0.90622287329999995" green="0.57637232540000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" red="1" green="0.57637232540000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
                                             <outlet property="etsyImageView" destination="ScF-wp-mda" id="Fp2-HS-Tbq"/>
                                             <outlet property="titleLabel" destination="Xqc-Id-dSI" id="Cbg-sC-uno"/>
@@ -93,7 +93,7 @@
                                 </connections>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" red="0.90622287329999995" green="0.57637232540000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="1" green="0.57637232540000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="z0i-yo-K7z" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="8" id="31I-GW-Kia"/>
                             <constraint firstItem="5Fa-gJ-8fW" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="49r-mA-82a"/>

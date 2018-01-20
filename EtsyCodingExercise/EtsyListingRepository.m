@@ -36,7 +36,13 @@ static const int SEARCH_LIMIT = 10;
     }
     
     if([keyword isEqualToString:currentKeyword]) {
-        currentOffset += SEARCH_LIMIT;
+        if ([self.listings count] >= self.maxListingsCount) {
+            NSLog(@"All records have alreayd been retrieved");
+            completion(nil);
+            return;
+        } else {
+            currentOffset += SEARCH_LIMIT;
+        }
     } else {
         [self.listings removeAllObjects];
         self.maxListingsCount = 0;
